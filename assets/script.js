@@ -1,6 +1,5 @@
-var lat = 33.44;
-var lon = -94.04;
-var weatherApiBase = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + "&lon=" + lon  + "&units=imperial" + "&appid=f692887ab5a79b9ba5e8c4d601ee3738";
+var city = '2172797';
+var cityApiBase = 'https://api.openweathermap.org/data/2.5/weather?id=' + city + '&appid=f692887ab5a79b9ba5e8c4d601ee3738';
 
 var cityDisplayEl = document.getElementById('city');
 var tempDisplayEl = document.getElementById('temp');
@@ -10,18 +9,33 @@ var uvDisplayEl = document.getElementById('UV');
 var cityInputEl = document.getElementById('input_text');
 var searchBtn = document.getElementById('search');
 
-fetch(weatherApiBase)
+fetch(cityApiBase)
   .then(function (response) {
     return response.json();
   })
   .then(function (data) {
     console.log(data);
-    
-    var weatherInfo = [data.current.temp, data.current.humidity, data.current.wind_speed, data.current.uvi, data.timezone];
 
-    displayWeatherInfo(weatherInfo);
+    var lat = data.coord.lat;
+    var lon = data.coord.lon;
+
+    var weatherApiBase = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + "&lon=" + lon  + "&units=imperial" + "&appid=f692887ab5a79b9ba5e8c4d601ee3738";
+
+
+   fetch(weatherApiBase)
+    .then(function (response) {
+        return response.json();
+    })
+    .then(function (data) {
+    
+        var weatherInfo = [data.current.temp, data.current.humidity, data.current.wind_speed, data.current.uvi, data.timezone];
+
+        displayWeatherInfo(weatherInfo);
+    });
+
 });
 
+//Displays weather information for the user to see
 function displayWeatherInfo (weatherInfo) {
     tempDisplayEl.textContent = weatherInfo[0];
     humidityDisplayEl.textContent = weatherInfo[1];
@@ -42,9 +56,21 @@ function displayWeatherInfo (weatherInfo) {
     }
 };
 
+
+//When user inputs city, calls for API information
 function searchCityInput () {
     var cityInput = cityInputEl.value.trim();
     console.log(cityInput);
+
+    if (isNaN(cityInput)) {
+        console.log("true");
+        
+        
+    } else {
+        console.log("not a city");
+        // $('.helper-text').attri('data-error')
+        return;
+    }
 }
 
 //Search button listener
