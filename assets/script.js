@@ -26,4 +26,16 @@ function displayWeatherInfo (weatherInfo) {
     windDisplayEl.textContent = weatherInfo[2];
     uvDisplayEl.textContent = weatherInfo[3];
     cityDisplayEl.textContent = weatherInfo[4];
+
+    if (weatherInfo[3] < 3) {
+        uvDisplayEl.classList.add('favorable');
+    }
+
+    if (weatherInfo[3] > 3 && weatherInfo[3] < 8) {
+        uvDisplayEl.classList.add('moderate');
+    }
+
+    if (weatherInfo[3] > 8) {
+        uvDisplayEl.classList.add('severe');
+    }
 };
