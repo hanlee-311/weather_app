@@ -1,5 +1,3 @@
-var city = '2172797';
-var cityApiBase = 'https://api.openweathermap.org/data/2.5/weather?id=' + city + '&appid=f692887ab5a79b9ba5e8c4d601ee3738';
 
 var cityDisplayEl = document.getElementById('city');
 var tempDisplayEl = document.getElementById('temp');
@@ -9,6 +7,7 @@ var uvDisplayEl = document.getElementById('UV');
 var cityInputEl = document.getElementById('input_text');
 var searchBtn = document.getElementById('search');
 
+function apiCall (cityApiBase) {
 fetch(cityApiBase)
   .then(function (response) {
     return response.json();
@@ -18,6 +17,7 @@ fetch(cityApiBase)
 
     var lat = data.coord.lat;
     var lon = data.coord.lon;
+    var cityName = data.name;
 
     var weatherApiBase = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + "&lon=" + lon  + "&units=imperial" + "&appid=f692887ab5a79b9ba5e8c4d601ee3738";
 
@@ -27,13 +27,14 @@ fetch(cityApiBase)
         return response.json();
     })
     .then(function (data) {
-    
-        var weatherInfo = [data.current.temp, data.current.humidity, data.current.wind_speed, data.current.uvi, data.timezone];
+        console.log(data);
+
+        var weatherInfo = [data.current.temp, data.current.humidity, data.current.wind_speed, data.current.uvi, cityName];
 
         displayWeatherInfo(weatherInfo);
     });
 
-});
+})};
 
 //Displays weather information for the user to see
 function displayWeatherInfo (weatherInfo) {
@@ -64,7 +65,8 @@ function searchCityInput () {
 
     if (isNaN(cityInput)) {
         console.log("true");
-        
+        var cityApiBase = 'https://api.openweathermap.org/data/2.5/weather?q=' + cityInput + '&appid=f692887ab5a79b9ba5e8c4d601ee3738';
+        apiCall(cityApiBase);
         
     } else {
         console.log("not a city");
