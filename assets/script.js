@@ -6,6 +6,8 @@ var windDisplayEl = document.getElementById('wind');
 var uvDisplayEl = document.getElementById('UV');
 var cityInputEl = document.getElementById('input_text');
 var searchBtn = document.getElementById('search');
+var forecastDisplayTemp = document.getElementById('forecast-temp');
+var forecastDisplayHumidity = document.getElementById('forecast-humidity');
 
 function apiCall (cityApiBase) {
 fetch(cityApiBase)
@@ -21,6 +23,8 @@ fetch(cityApiBase)
 
     var weatherApiBase = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + "&lon=" + lon  + "&units=imperial" + "&appid=f692887ab5a79b9ba5e8c4d601ee3738";
 
+    var forecastApiBase = 'https://api.openweathermap.org/data/2.5/forecast?q=' + cityName + '&appid=f692887ab5a79b9ba5e8c4d601ee3738'
+
 
    fetch(weatherApiBase)
     .then(function (response) {
@@ -32,6 +36,19 @@ fetch(cityApiBase)
         var weatherInfo = [data.current.temp, data.current.humidity, data.current.wind_speed, data.current.uvi, cityName];
 
         displayWeatherInfo(weatherInfo);
+    });
+
+    fetch(forecastApiBase)
+    .then(function (response) {
+        return response.json();
+    })
+    .then(function (data) {
+        console.log(data);
+        // console.log(data.daily)
+
+        // var forecastInfo = [data.daily[0].temp.max, data.daily[0].humidity]
+
+        // displayForecastInfo (forecastInfo);
     });
 
 })};
@@ -57,6 +74,10 @@ function displayWeatherInfo (weatherInfo) {
     }
 };
 
+function displayForecastInfo (forecastInfo) {
+    forecastDisplayTemp.textContent = forecastInfo[0];
+    forecastDisplayHumidity.textContent = forecastInfo[1];
+}
 
 //When user inputs city, calls for API information
 function searchCityInput () {
