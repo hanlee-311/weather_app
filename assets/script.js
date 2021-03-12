@@ -23,32 +23,44 @@ fetch(cityApiBase)
 
     var weatherApiBase = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + "&lon=" + lon  + "&units=imperial" + "&appid=f692887ab5a79b9ba5e8c4d601ee3738";
 
-    var forecastApiBase = 'https://api.openweathermap.org/data/2.5/forecast?q=' + cityName + '&appid=f692887ab5a79b9ba5e8c4d601ee3738'
-
-
    fetch(weatherApiBase)
     .then(function (response) {
         return response.json();
     })
     .then(function (data) {
-        console.log(data);
-
         var weatherInfo = [data.current.temp, data.current.humidity, data.current.wind_speed, data.current.uvi, cityName];
 
+        var forecastBox = document.getElementById('forecast-container');
+
+        for (var i = 1; i < 6 ; i++) {
+            var date = moment.unix(data.daily[i].dt).format('dddd MMM');
+
+            var card = document.createElement('div');
+            card.setAttribute('class', 'card-panel teal');
+
+            var span = document.createElement('span');
+            span.setAttribute('class', "white-text");
+
+            var dateEl = document.createElement('p')
+            dateEl.setAttribute('id', 'date');
+            dateEl.textContent = date;
+
+            var tempEl = document.createElement('p');
+            tempEl.setAttribute('id', 'forecast-temp');
+            tempEl.textContent = data.daily[i].temp.max; 
+
+            var humidityEl = document.createElement('p')
+            humidityEl.setAttribute('id', 'forecast-humidity')
+            humidityEl.textContent = data.daily[i].humidity;
+
+            span.appendChild(dateEl);
+            span.appendChild(tempEl);
+            span.appendChild(humidityEl);
+            card.appendChild(span);
+            forecastBox.appendChild(card);
+        };
+
         displayWeatherInfo(weatherInfo);
-    });
-
-    fetch(forecastApiBase)
-    .then(function (response) {
-        return response.json();
-    })
-    .then(function (data) {
-        console.log(data);
-        // console.log(data.daily)
-
-        // var forecastInfo = [data.daily[0].temp.max, data.daily[0].humidity]
-
-        // displayForecastInfo (forecastInfo);
     });
 
 })};
@@ -74,15 +86,9 @@ function displayWeatherInfo (weatherInfo) {
     }
 };
 
-function displayForecastInfo (forecastInfo) {
-    forecastDisplayTemp.textContent = forecastInfo[0];
-    forecastDisplayHumidity.textContent = forecastInfo[1];
-}
-
 //When user inputs city, calls for API information
 function searchCityInput () {
     var cityInput = cityInputEl.value.trim();
-    console.log(cityInput);
 
     if (isNaN(cityInput)) {
         console.log("true");
