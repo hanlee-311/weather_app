@@ -7,6 +7,8 @@ var tempDisplayEl = document.getElementById('temp');
 var humidityDisplayEl = document.getElementById('humidity');
 var windDisplayEl = document.getElementById('wind');
 var uvDisplayEl = document.getElementById('UV');
+var cityInputEl = document.getElementById('input_text');
+var searchBtn = document.getElementById('search');
 
 fetch(weatherApiBase)
   .then(function (response) {
@@ -39,3 +41,11 @@ function displayWeatherInfo (weatherInfo) {
         uvDisplayEl.classList.add('severe');
     }
 };
+
+function searchCityInput () {
+    var cityInput = cityInputEl.value.trim();
+    console.log(cityInput);
+}
+
+//Search button listener
+searchBtn.addEventListener('click', searchCityInput);
