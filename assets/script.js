@@ -1,14 +1,29 @@
-var weatherApiBase = 'http://maps.openweathermap.org/maps/2.0/weather/' + op + "/" + z + "/" + x + "/" + y + "&appid=f692887ab5a79b9ba5e8c4d601ee3738";
+var lat = 33.44;
+var lon = -94.04;
+var weatherApiBase = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + "&lon=" + lon  + "&units=imperial" + "&appid=f692887ab5a79b9ba5e8c4d601ee3738";
 
-fetch(weatherApi)
+var cityDisplayEl = document.getElementById('city');
+var tempDisplayEl = document.getElementById('temp');
+var humidityDisplayEl = document.getElementById('humidity');
+var windDisplayEl = document.getElementById('wind');
+var uvDisplayEl = document.getElementById('UV');
+
+fetch(weatherApiBase)
   .then(function (response) {
     return response.json();
   })
   .then(function (data) {
-    // link to download
-    console.log(data.items[1].files.regular);
-    // serif/sans
-    console.log(data.items[1].category);
-    // family
-    console.log(data.items[1].family);
+    console.log(data);
+    
+    var weatherInfo = [data.current.temp, data.current.humidity, data.current.wind_speed, data.current.uvi, data.timezone];
+
+    displayWeatherInfo(weatherInfo);
 });
+
+function displayWeatherInfo (weatherInfo) {
+    tempDisplayEl.textContent = weatherInfo[0];
+    humidityDisplayEl.textContent = weatherInfo[1];
+    windDisplayEl.textContent = weatherInfo[2];
+    uvDisplayEl.textContent = weatherInfo[3];
+    cityDisplayEl.textContent = weatherInfo[4];
+};
