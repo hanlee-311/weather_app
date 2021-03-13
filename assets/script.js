@@ -8,6 +8,7 @@ var cityInputEl = document.getElementById('input_text');
 var searchBtn = document.getElementById('search');
 var forecastDisplayTemp = document.getElementById('forecast-temp');
 var forecastDisplayHumidity = document.getElementById('forecast-humidity');
+var searchCollection = document.getElementById('collection');
 
 function apiCall (cityApiBase) {
 fetch(cityApiBase)
@@ -15,7 +16,6 @@ fetch(cityApiBase)
     return response.json();
   })
   .then(function (data) {
-    console.log(data);
 
     var lat = data.coord.lat;
     var lon = data.coord.lon;
@@ -32,6 +32,7 @@ fetch(cityApiBase)
 
         var forecastBox = document.getElementById('forecast-container');
 
+        //Creates containers for the 5 day forecast
         for (var i = 1; i < 6 ; i++) {
             var date = moment.unix(data.daily[i].dt).format('dddd MMM');
 
@@ -91,9 +92,12 @@ function searchCityInput () {
     var cityInput = cityInputEl.value.trim();
 
     if (isNaN(cityInput)) {
-        console.log("true");
         var cityApiBase = 'https://api.openweathermap.org/data/2.5/weather?q=' + cityInput + '&appid=f692887ab5a79b9ba5e8c4d601ee3738';
         apiCall(cityApiBase);
+
+        // let savedCities = JSON.parse(localStorage.getItem("city")) || [];
+        localStorage.setItem("city", JSON.stringify(cityInput));
+        renderCitySearch();
         
     } else {
         console.log("not a city");
@@ -102,5 +106,39 @@ function searchCityInput () {
     }
 }
 
+//Renders users previous searches
+var citySearches = [];
+
+function renderCitySearch () {
+    citySearches = JSON.parse(localStorage.getItem('city'));
+    
+    if (citySearches == null) {
+        citySearches = [];
+    }
+
+    for (var i = 0; i < citySearches.length; i++) {
+        var citySearch = citySearches;
+
+        var a = document.createElement("a");
+        a.textContent = citySearch;
+        a.setAttribute("href", "#!");
+        a.setAttribute("class", "collection-item");
+        searchCollection.appendChild(a);
+    }
+};
+
+//Renders saved searches when page loads
+function init() {
+    var storedCitySearches = JSON.parse(localStorage.getItem('city'));
+
+    if (storedCitySearches !==null) {
+        citySearches = storedCitySearches;
+    }
+
+    renderCitySearch();
+}
+
 //Search button listener
 searchBtn.addEventListener('click', searchCityInput);
+
+init();
