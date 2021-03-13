@@ -95,8 +95,21 @@ function searchCityInput () {
         var cityApiBase = 'https://api.openweathermap.org/data/2.5/weather?q=' + cityInput + '&appid=f692887ab5a79b9ba5e8c4d601ee3738';
         apiCall(cityApiBase);
 
-        // let savedCities = JSON.parse(localStorage.getItem("city")) || [];
-        localStorage.setItem("city", JSON.stringify(cityInput));
+        if (localStorage.getItem('city') == null) {
+            var citySearches = [cityInput];
+            localStorage.setItem('city', JSON.stringify(citySearches));
+        } else {
+            let savedCities = JSON.parse(localStorage.getItem("city"));
+            console.log(savedCities);
+            console.log(cityInput);
+            savedCities.push(cityInput);
+            console.log(savedCities);
+            localStorage.setItem("city", JSON.stringify(savedCities));
+        }
+
+        // let savedCities = JSON.parse(localStorage.getItem("city"));
+        // savedCities.push(cityInput);
+        // localStorage.setItem("city", JSON.stringify(cityInput));
         renderCitySearch();
         
     } else {
@@ -107,17 +120,14 @@ function searchCityInput () {
 }
 
 //Renders users previous searches
-var citySearches = [];
 
 function renderCitySearch () {
     citySearches = JSON.parse(localStorage.getItem('city'));
-    
-    if (citySearches == null) {
-        citySearches = [];
-    }
+    console.log(citySearches);
 
+    searchCollection.innerHTML = '';
     for (var i = 0; i < citySearches.length; i++) {
-        var citySearch = citySearches;
+        var citySearch = citySearches[i];
 
         var a = document.createElement("a");
         a.textContent = citySearch;
