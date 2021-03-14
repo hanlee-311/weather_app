@@ -29,6 +29,7 @@ fetch(cityApiBase)
     })
     .then(function (data) {
         var weatherInfo = [data.current.temp, data.current.humidity, data.current.wind_speed, data.current.uvi, cityName];
+        console.log(data);
 
         var forecastBox = document.getElementById('forecast-container');
 
@@ -100,16 +101,12 @@ function searchCityInput () {
             localStorage.setItem('city', JSON.stringify(citySearches));
         } else {
             let savedCities = JSON.parse(localStorage.getItem("city"));
-            console.log(savedCities);
-            console.log(cityInput);
             savedCities.push(cityInput);
-            console.log(savedCities);
             localStorage.setItem("city", JSON.stringify(savedCities));
         }
 
-        // let savedCities = JSON.parse(localStorage.getItem("city"));
-        // savedCities.push(cityInput);
-        // localStorage.setItem("city", JSON.stringify(cityInput));
+        cityInputEl.value = "";
+
         renderCitySearch();
         
     } else {
@@ -123,7 +120,6 @@ function searchCityInput () {
 
 function renderCitySearch () {
     citySearches = JSON.parse(localStorage.getItem('city'));
-    console.log(citySearches);
 
     searchCollection.innerHTML = '';
     for (var i = 0; i < citySearches.length; i++) {
@@ -150,5 +146,12 @@ function init() {
 
 //Search button listener
 searchBtn.addEventListener('click', searchCityInput);
+
+//Recall previously searched information button listener
+$(document).on("click", ".collection-item", function() {
+    var cityApiBase = 'https://api.openweathermap.org/data/2.5/weather?q=' + this.innerHTML + '&appid=f692887ab5a79b9ba5e8c4d601ee3738';
+
+    apiCall(cityApiBase);
+})
 
 init();
