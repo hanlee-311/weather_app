@@ -1,3 +1,7 @@
+.content {
+    padding-top: 5em;
+}
+
 .favorable {
     background-color: green;
 }
@@ -8,4 +12,23 @@
 
 .severe {
     background-color: red;
+}
+
+.hide {
+    visibility: none;
+}
+
+/*Today's weather info card*/
+#city {
+    font-size: xx-large;
+    padding-bottom: 1em;
+}
+
+#temp, #humidity, #wind, #UV {
+    padding-bottom: 2em;
+}
+
+#forecast-container {
+    display: flex; 
+    justify-content: space-between;
 }

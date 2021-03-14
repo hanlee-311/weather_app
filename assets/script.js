@@ -28,14 +28,14 @@ fetch(cityApiBase)
         return response.json();
     })
     .then(function (data) {
-        var weatherInfo = [data.current.temp, data.current.humidity, data.current.wind_speed, data.current.uvi, cityName];
+        var weatherInfo = [data.current.temp, data.current.humidity, data.current.wind_speed, data.current.uvi, cityName, data.current.weather[0].icon, data.current.dt];
         console.log(data);
 
         var forecastBox = document.getElementById('forecast-container');
 
         //Creates containers for the 5 day forecast
         for (var i = 1; i < 6 ; i++) {
-            var date = moment.unix(data.daily[i].dt).format('dddd MMM');
+            var date = moment.unix(data.daily[i].dt).format('M/D/YYYY');
 
             var card = document.createElement('div');
             card.setAttribute('class', 'card-panel teal');
@@ -49,11 +49,11 @@ fetch(cityApiBase)
 
             var tempEl = document.createElement('p');
             tempEl.setAttribute('id', 'forecast-temp');
-            tempEl.textContent = data.daily[i].temp.max; 
+            tempEl.textContent = "Temp: " + data.daily[i].temp.max + " ℉"; 
 
             var humidityEl = document.createElement('p')
             humidityEl.setAttribute('id', 'forecast-humidity')
-            humidityEl.textContent = data.daily[i].humidity;
+            humidityEl.textContent = "Humidity: " + data.daily[i].humidity + "%";
 
             span.appendChild(dateEl);
             span.appendChild(tempEl);
@@ -69,11 +69,15 @@ fetch(cityApiBase)
 
 //Displays weather information for the user to see
 function displayWeatherInfo (weatherInfo) {
-    tempDisplayEl.textContent = weatherInfo[0];
-    humidityDisplayEl.textContent = weatherInfo[1];
-    windDisplayEl.textContent = weatherInfo[2];
-    uvDisplayEl.textContent = weatherInfo[3];
-    cityDisplayEl.textContent = weatherInfo[4];
+    var iconURL = "http://openweathermap.org/img/w/" + weatherInfo[5] + ".png";
+    var date = moment.unix(weatherInfo[6]).format('(M/D/YYYY)');
+
+    tempDisplayEl.textContent = "Temperature: " + weatherInfo[0] + " ℉";
+    humidityDisplayEl.textContent = "Humidity: " + weatherInfo[1] + "%";
+    windDisplayEl.textContent = "Wind Speed: " + weatherInfo[2] + " MPH";
+    uvDisplayEl.textContent ="UV Index: " + weatherInfo[3];
+    cityDisplayEl.textContent = weatherInfo[4] + " " + date + " ";
+    cityDisplayEl.append($("<img>").attr("src", iconURL));
 
     if (weatherInfo[3] < 3) {
         uvDisplayEl.classList.add('favorable');
@@ -130,6 +134,8 @@ function renderCitySearch () {
         a.setAttribute("href", "#!");
         a.setAttribute("class", "collection-item");
         searchCollection.appendChild(a);
+
+        searchCollection.classList.remove('hide');
     }
 };
 
