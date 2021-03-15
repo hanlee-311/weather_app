@@ -1,4 +1,3 @@
-
 var cityDisplayEl = document.getElementById('city');
 var tempDisplayEl = document.getElementById('temp');
 var humidityDisplayEl = document.getElementById('humidity');
@@ -32,6 +31,7 @@ fetch(cityApiBase)
         console.log(data);
 
         var forecastBox = document.getElementById('forecast-container');
+        forecastBox.innerHTML = "";
 
         //Creates containers for the 5 day forecast
         for (var i = 1; i < 6 ; i++) {
@@ -77,7 +77,9 @@ function displayWeatherInfo (weatherInfo) {
     windDisplayEl.textContent = "Wind Speed: " + weatherInfo[2] + " MPH";
     uvDisplayEl.textContent ="UV Index: " + weatherInfo[3];
     cityDisplayEl.textContent = weatherInfo[4] + " " + date + " ";
-    cityDisplayEl.append($("<img>").attr("src", iconURL));
+    let iconImgTag = $("<img>");
+    iconImgTag.attr("src", iconURL);
+    cityDisplayEl.append(iconImgTag[0]);
 
     if (weatherInfo[3] < 3) {
         uvDisplayEl.classList.add('favorable');
@@ -105,13 +107,16 @@ function searchCityInput () {
             localStorage.setItem('city', JSON.stringify(citySearches));
         } else {
             let savedCities = JSON.parse(localStorage.getItem("city"));
-            savedCities.push(cityInput);
-            localStorage.setItem("city", JSON.stringify(savedCities));
+
+            if (savedCities.indexOf(cityInput) == -1) {
+                savedCities.push(cityInput);
+                localStorage.setItem("city", JSON.stringify(savedCities));
+            };
         }
 
-        cityInputEl.value = "";
-
         renderCitySearch();
+
+        cityInputEl.value = "";
         
     } else {
         console.log("not a city");
@@ -126,6 +131,9 @@ function renderCitySearch () {
     citySearches = JSON.parse(localStorage.getItem('city'));
 
     searchCollection.innerHTML = '';
+
+    if (citySearches) {
+
     for (var i = 0; i < citySearches.length; i++) {
         var citySearch = citySearches[i];
 
@@ -136,7 +144,7 @@ function renderCitySearch () {
         searchCollection.appendChild(a);
 
         searchCollection.classList.remove('hide');
-    }
+    }}
 };
 
 //Renders saved searches when page loads
