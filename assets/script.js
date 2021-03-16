@@ -47,6 +47,10 @@ fetch(cityApiBase)
             dateEl.setAttribute('id', 'date');
             dateEl.textContent = date;
 
+            var iconEl =document.createElement('img');
+            var iconURL = "http://openweathermap.org/img/w/" + data.daily[i].weather[0].icon + ".png";
+            iconEl.setAttribute('src', iconURL);
+
             var tempEl = document.createElement('p');
             tempEl.setAttribute('id', 'forecast-temp');
             tempEl.textContent = "Temp: " + data.daily[i].temp.max + " ℉"; 
@@ -57,6 +61,7 @@ fetch(cityApiBase)
 
             span.appendChild(dateEl);
             span.appendChild(tempEl);
+            span.appendChild(iconEl);
             span.appendChild(humidityEl);
             card.appendChild(span);
             forecastBox.appendChild(card);
