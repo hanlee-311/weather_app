@@ -16,46 +16,47 @@
         <div class="nav-wrapper">
           <a href="#" class="brand-logo center">Weather<i class="material-icons">cloud_queue</i> Dashboard</a>
         </div>
-      </nav>
+    </nav>
 
     <div class= "row content ">
+
       <div class="col s3 blue-grey lighten-5">
 
-      <div class="row ">
-        <form class="col s6">
-          <div class="row">
-            <div class="input-field col s12">
-              <input id="input_text" type="text" class="validate">
-              <label for="input_text">Search for a city:</label>
-              <span class="helper-text" data-error="Please enter a city" data-success=""></span>
-              <a id="search" class="waves-effect waves-light btn"><i class="material-icons">search</i></a>
+        <div class="row ">
+          <form class="col s6">
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="input_text" type="text" class="validate">
+                <label for="input_text">Search for a city:</label>
+                <span class="helper-text" data-error="Please enter a city" data-success=""></span>
+                <a id="search" class="waves-effect waves-light btn"><i class="material-icons">search</i></a>
+              </div>
             </div>
-          </div>
-        </form>
-      </div>
+          </form>
+        </div>
 
-      <div id= "collection" class="collection hide"></div>
+        <div id= "collection" class="collection hide"></div>
 
       </div>
 
       <div class="col s9">
-      <div class="today_date row hide">
-        <div class="col s12 m5">
-          <div class="card-panel">
-            <span class="black-text">
-                <p id="city"></p>
-                <p id="temp"></p>
-                <p id="humidity"></p>
-                <p id="wind"></p>
-                <p id="UV"></p>
-            </span>
+        <div class="today_date row hide">
+          <div class="col s12 m5">
+            <div class="card-panel">
+              <span class="black-text">
+                  <p id="city"></p>
+                  <p id="temp"></p>
+                  <p id="humidity"></p>
+                  <p id="wind"></p>
+                  <p id="UV"></p>
+              </span>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="row">
-        <div id= "forecast-container" class="col s12 m5"></div>
-      </div>
+        <div class="row">
+          <div id= "forecast-container" class="row"></div>
+        </div>
 
       </div>
 

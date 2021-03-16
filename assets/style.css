@@ -2,18 +2,6 @@
     padding-top: 5em;
 }
 
-.favorable {
-    background-color: green;
-}
-
-.moderate {
-    background-color: yellow;
-}
-
-.severe {
-    background-color: red;
-}
-
 .hide {
     visibility: none;
 }
@@ -28,7 +16,38 @@
     padding-bottom: 2em;
 }
 
-/* #forecast-container {
-    display: flex; 
-    justify-content: space-between;
-} */
+.favorable {
+    background-color: green;
+}
+
+.moderate {
+    background-color: yellow;
+}
+
+.severe {
+    background-color: red;
+}
+
+/*Forecast Card Styling*/
+
+#forecast-container.row {
+    margin-left: .7em;
+}
+
+.s2 {
+    margin: 2em;
+}
+
+#forecast-date {
+    font-size: large;
+    font-weight: bold;
+    padding: 1em 0em 1em;
+}
+
+#forecast-temp {
+    padding: 1em 0em;
+}
+
+#forecast-humidity {
+    padding-bottom: 1em;
+}

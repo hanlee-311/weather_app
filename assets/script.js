@@ -38,16 +38,16 @@ fetch(cityApiBase)
             var date = moment.unix(data.daily[i].dt).format('M/D/YYYY');
 
             var card = document.createElement('div');
-            card.setAttribute('class', 'card-panel teal');
+            card.setAttribute('class', 'card-panel teal col s2');
 
             var span = document.createElement('span');
             span.setAttribute('class', "white-text");
 
             var dateEl = document.createElement('p')
-            dateEl.setAttribute('id', 'date');
+            dateEl.setAttribute('id', 'forecast-date');
             dateEl.textContent = date;
 
-            var iconEl =document.createElement('img');
+            var iconEl = document.createElement('img');
             var iconURL = "http://openweathermap.org/img/w/" + data.daily[i].weather[0].icon + ".png";
             iconEl.setAttribute('src', iconURL);
 
@@ -60,8 +60,8 @@ fetch(cityApiBase)
             humidityEl.textContent = "Humidity: " + data.daily[i].humidity + "%";
 
             span.appendChild(dateEl);
-            span.appendChild(tempEl);
             span.appendChild(iconEl);
+            span.appendChild(tempEl);
             span.appendChild(humidityEl);
             card.appendChild(span);
             forecastBox.appendChild(card);
