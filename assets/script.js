@@ -69,6 +69,7 @@ fetch(cityApiBase)
 
 //Displays weather information for the user to see
 function displayWeatherInfo (weatherInfo) {
+    document.querySelector('.today_date').classList.remove('hide');
     var iconURL = "http://openweathermap.org/img/w/" + weatherInfo[5] + ".png";
     var date = moment.unix(weatherInfo[6]).format('(M/D/YYYY)');
 
