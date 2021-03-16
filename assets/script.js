@@ -8,6 +8,7 @@ var searchBtn = document.getElementById('search');
 var forecastDisplayTemp = document.getElementById('forecast-temp');
 var forecastDisplayHumidity = document.getElementById('forecast-humidity');
 var searchCollection = document.getElementById('collection');
+var apiError = "";
 
 function apiCall (cityApiBase) {
 fetch(cityApiBase)
@@ -28,7 +29,6 @@ fetch(cityApiBase)
     })
     .then(function (data) {
         var weatherInfo = [data.current.temp, data.current.humidity, data.current.wind_speed, data.current.uvi, cityName, data.current.weather[0].icon, data.current.dt];
-        console.log(data);
 
         var forecastBox = document.getElementById('forecast-container');
         forecastBox.innerHTML = "";
@@ -70,7 +70,13 @@ fetch(cityApiBase)
         displayWeatherInfo(weatherInfo);
     });
 
-})};
+})
+    .catch(error => logError(error))
+};
+
+function logError (error) {
+    apiError = error;
+}
 
 //Displays weather information for the user to see
 function displayWeatherInfo (weatherInfo) {
@@ -89,14 +95,20 @@ function displayWeatherInfo (weatherInfo) {
 
     if (weatherInfo[3] < 3) {
         uvDisplayEl.classList.add('favorable');
+        uvDisplayEl.classList.remove('moderate');
+        uvDisplayEl.classList.remove('severe')
     }
 
     if (weatherInfo[3] > 3 && weatherInfo[3] < 8) {
         uvDisplayEl.classList.add('moderate');
+        uvDisplayEl.classList.remove('severe')
+        uvDisplayEl.classList.remove('favorable');
     }
 
     if (weatherInfo[3] > 8) {
         uvDisplayEl.classList.add('severe');
+        uvDisplayEl.classList.remove('moderate');
+        uvDisplayEl.classList.remove('favorable');
     }
 };
 
@@ -104,7 +116,7 @@ function displayWeatherInfo (weatherInfo) {
 function searchCityInput () {
     var cityInput = cityInputEl.value.trim();
 
-    if (isNaN(cityInput)) {
+    if (isNaN(cityInput) && cityInput !== null) {
         var cityApiBase = 'https://api.openweathermap.org/data/2.5/weather?q=' + cityInput + '&appid=f692887ab5a79b9ba5e8c4d601ee3738';
         apiCall(cityApiBase);
 
@@ -124,9 +136,8 @@ function searchCityInput () {
 
         cityInputEl.value = "";
         
-    } else {
-        console.log("not a city");
-        // $('.helper-text').attri('data-error')
+    } else{
+        M.toast({html: 'Please enter a proper city name.'})
         return;
     }
 }

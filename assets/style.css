@@ -9,6 +9,7 @@
 /*Today's weather info card*/
 #city {
     font-size: xx-large;
+    font-weight: bold;
     padding-bottom: 1em;
 }
 
@@ -17,15 +18,24 @@
 }
 
 .favorable {
-    background-color: green;
+    width: fit-content;
+    height: fit-content;
+    border: solid green;
+    background-color: lightgreen;
 }
 
 .moderate {
-    background-color: yellow;
+    width: fit-content;
+    height: fit-content;
+    border: solid yellow;
+    background-color: rgb(245, 245, 171);
 }
 
 .severe {
-    background-color: red;
+    width: fit-content;
+    height: fit-content;
+    border: solid red;
+    background-color: rgb(235, 104, 104);
 }
 
 /*Forecast Card Styling*/
