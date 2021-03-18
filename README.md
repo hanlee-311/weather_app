@@ -2,7 +2,7 @@
 
 A simple yet effective weather application to meet all your need-to-know weather needs. 
 
-#### Deployed Link: 
+#### Deployed Link: https://hanlee-311.github.io/weather_app/
 
 ![Weather Dashboard Application](./assets/weather-app.png)
 
