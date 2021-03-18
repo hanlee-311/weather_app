@@ -18,22 +18,25 @@
 }
 
 .favorable {
-    width: fit-content;
-    height: fit-content;
+    /* width: fit-content; */
+    padding: .5em 1em;
+    display: inline-block;
     border: solid green;
     background-color: lightgreen;
 }
 
 .moderate {
     width: fit-content;
-    height: fit-content;
+    padding: .5em 1em;
+    display: inline-block;
     border: solid yellow;
     background-color: rgb(245, 245, 171);
 }
 
 .severe {
     width: fit-content;
-    height: fit-content;
+    padding: .5em 1em;
+    display: inline-block;
     border: solid red;
     background-color: rgb(235, 104, 104);
 }

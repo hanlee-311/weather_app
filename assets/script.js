@@ -8,7 +8,6 @@ var searchBtn = document.getElementById('search');
 var forecastDisplayTemp = document.getElementById('forecast-temp');
 var forecastDisplayHumidity = document.getElementById('forecast-humidity');
 var searchCollection = document.getElementById('collection');
-var apiError = "";
 
 function apiCall (cityApiBase) {
 fetch(cityApiBase)
@@ -68,15 +67,11 @@ fetch(cityApiBase)
         };
 
         displayWeatherInfo(weatherInfo);
-    });
+    })
 
+    .catch(function (error) {console.log(error)});
 })
-    .catch(error => logError(error))
 };
-
-function logError (error) {
-    apiError = error;
-}
 
 //Displays weather information for the user to see
 function displayWeatherInfo (weatherInfo) {
@@ -87,7 +82,7 @@ function displayWeatherInfo (weatherInfo) {
     tempDisplayEl.textContent = "Temperature: " + weatherInfo[0] + " ℉";
     humidityDisplayEl.textContent = "Humidity: " + weatherInfo[1] + "%";
     windDisplayEl.textContent = "Wind Speed: " + weatherInfo[2] + " MPH";
-    uvDisplayEl.textContent ="UV Index: " + weatherInfo[3];
+    uvDisplayEl.textContent = weatherInfo[3];
     cityDisplayEl.textContent = weatherInfo[4] + " " + date + " ";
     let iconImgTag = $("<img>");
     iconImgTag.attr("src", iconURL);
